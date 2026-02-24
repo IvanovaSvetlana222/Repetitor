@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Репетитор по русскому языку | Иванова Светлана Юрьевна</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-green: #0f5132;
+            --bright-green: #198754;
+            --gold: #d4af37;
+            --light-gold: #f3e5ab;
+            --text-dark: #2c2c2c;
+            --white: #ffffff;
+            --emerald: #059669;
+            --dark-emerald: #065f46;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fcfcfc;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, .logo { font-family: 'Lobster', cursive; }
+
+        /* NAVIGATION */
+        .nav-menu {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        .nav-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-list a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-list a:hover {
+            background: linear-gradient(135deg, var(--gold), #f0c419);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+        }
+
+        /* ===== HEADER (WIDE) WITH VIDEO, NO CROP ===== */
+        header {
+            position: relative;
+            overflow: hidden;
+            margin: 18px 18px 0;              /* воздух по краям */
+            width: calc(100% - 36px);
+            border-bottom: 5px solid var(--gold);
+            background: transparent;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            border-radius: 25px;
+        }
+
+        /* Видео-блок как “широкая шапка” */
+        .header-media {
+            position: relative;
+            width: 100%;
+            max-height: 78vh;
+            min-height: 420px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--white), var(--light-gold)); /* цвет полей */
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        /*
+          ВАЖНО:
+          Это рамка, которая подстраивается под реальные пропорции видео,
+          чтобы скруглялись углы ИМЕННО у видимого видео, а не у всей шапки.
+        */
+        .header-video-frame {
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            /* размеры выставит JS после загрузки метаданных видео */
+            width: 92vw;
+            max-width: 1400px;
+            height: 78vh;
+            max-height: 78vh;
+            background: transparent;
+        }
+
+        /* Само видео — НЕ ОБРЕЗАЕМ (contain) */
+        .header-video-frame video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain; /* не режем */
+            background: transparent;
+            border-radius: 25px; /* на всякий случай */
+        }
+
+        /* Затемнение поверх видео — для читаемости текста (и тоже со скруглением) */
+        .header-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: 25px;
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,0.12) 0%,
+                rgba(0,0,0,0.06) 45%,
+                rgba(0,0,0,0.12) 100%
+            );
+            pointer-events: none;
+        }
+
+        /* Контент поверх видео */
+        .header-inner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 1rem;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            text-align: left;
+        }
+
+        /* Левый блок (текст+кнопка) вертикально */
+        .header-content > div:first-child {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* центрирует кнопку */
+        }
+
+        /* Эмблему слева */
+        .emblem {
+            order: -1;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #ffd700, #d4af37, #ffd700);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            margin-bottom: 0.5rem;
+            animation: shimmer 3s linear infinite;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+        }
+
+        @keyframes shimmer { to { background-position: 200% center; } }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.35);
+        }
+
+        .slogan {
+            background: linear-gradient(135deg, #ffd700, #d4af37, #f0c419);
+            background-size: 200% auto;
+            color: var(--dark-emerald);
+            display: inline-block;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            transform: rotate(-2deg);
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.35),
+                0 0 30px rgba(212, 175, 55, 0.45);
+            animation:
+                sloganShimmer 3s linear infinite,
+                sloganFloat 3s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes sloganShimmer { to { background-position: 200% center; } }
+        @keyframes sloganFloat {
+            0%, 100% { transform: rotate(-2deg) translateY(0); }
+            50% { transform: rotate(-2deg) translateY(-5px); }
+        }
+
+        .emblem {
+            width: 220px;
+            height: 220px;
+            border: 4px solid var(--gold);
+            overflow: hidden;
+            box-shadow:
+                0 0 20px rgba(212, 175, 55, 0.5),
+                0 0 40px rgba(212, 175, 55, 0.3),
+                0 5px 15px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            background: var(--white);
+            transition: all 0.3s ease;
+            animation: emblemGlow 3s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes emblemGlow {
+            0%, 100% {
+                box-shadow:
+                    0 0 20px rgba(212, 175, 55, 0.5),
+                    0 0 40px rgba(212, 175, 55, 0.3),
+                    0 5px 15px rgba(0,0,0,0.3);
+            }
+            50% {
+                box-shadow:
+                    0 0 30px rgba(212, 175, 55, 0.7),
+                    0 0 60px rgba(212, 175, 55, 0.5),
+                    0 5px 15px rgba(0,0,0,0.3);
+            }
+        }
+
+        .emblem:hover { transform: scale(1.05) rotate(2deg); }
+        .emblem img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Кнопка НАЧАЛИ! */
+        .start-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+            padding: 12px 30px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            font-size: 1.05rem;
+            color: var(--primary-green);
+            background: linear-gradient(135deg, var(--gold), #f0c419);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(0,0,0,0.45);
+            filter: saturate(1.05);
+        }
+
+        .start-btn:active { transform: translateY(0); }
+
+        /* ====== VIDEO (адаптивный контейнер 16:9) ====== */
+        .video-section {
+            background: linear-gradient(135deg, var(--white), var(--light-gold));
+            padding: 2.5rem 0 3.5rem;
+        }
+
+        .video-section .video-wrap {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 3px solid var(--gold);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+            background: #000;
+        }
+
+        .video-section .video-ratio {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 */
+        }
+
+        .video-section video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .video-section .video-caption {
+            text-align: center;
+            margin-top: 14px;
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+        /* ====== /VIDEO ====== */
+
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 0;
+            background-color: #fff;
+        }
+
+        .hero-text { flex: 1; min-width: 300px; padding-right: 2rem; }
+
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            position: relative;
+        }
+
+        .photo-placeholder {
+            width: 300px;
+            height: 380px;
+            border: 5px solid var(--gold);
+            border-radius: 15px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
+            background: var(--light-gold);
+        }
+
+        .photo-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+
+        .hero h2 { font-size: 2.5rem; color: var(--primary-green); margin-bottom: 1rem; }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: #f9f9f9;
+            border-left: 4px solid var(--gold);
+            padding: 15px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .stat-number {
+            font-family: 'Lobster', cursive;
+            font-size: 2rem;
+            color: var(--primary-green);
+            display: block;
+        }
+
+        /* HOW I WORK SECTION */
+        .how-i-work {
+            background: linear-gradient(135deg, var(--primary-green), var(--bright-green));
+            padding: 3rem 0;
+            color: var(--white);
+        }
+
+        .how-i-work h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
+            color: var(--gold);
+        }
+
+        .how-i-work h2 span {
+            display: block;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            margin-top: 0.3rem;
+            opacity: 0.9;
+        }
+
+        .steps-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .step-card:hover::before { opacity: 1; }
+
+        .step-number {
+            font-family: 'Lobster', cursive;
+            font-size: 2rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+
+        .step-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-card p {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* PRICING SECTION */
+        .pricing {
+            background: linear-gradient(135deg, var(--light-gold), var(--white));
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .pricing h2 { color: var(--primary-green); font-size: 2.5rem; margin-bottom: 1rem; }
+
+        .pricing h2 span {
+            display: block;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            margin-top: 0.5rem;
+            color: var(--dark-emerald);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 30px 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--gold), var(--bright-green));
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border-width: 4px;
+            box-shadow: 0 10px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .pricing-card.featured::after {
+            content: 'Популярное';
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            background: linear-gradient(135deg, var(--gold), #f0c419);
+            color: var(--white);
+            padding: 5px 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+        }
+
+        .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3); }
+        .pricing-card.featured:hover { transform: scale(1.05) translateY(-10px); }
+
+        .pricing-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
+
+        .pricing-card h3 { color: var(--primary-green); font-size: 1.5rem; margin-bottom: 10px; }
+
+        .pricing-price {
+            font-family: 'Lobster', cursive;
+            font-size: 2.5rem;
+            color: var(--bright-green);
+            margin: 15px 0;
+        }
+
+        .pricing-price span {
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            display: block;
+            margin-top: 5px;
+        }
+
+        .pricing-features { list-style: none; margin: 20px 0; text-align: left; }
+        .pricing-features li { padding: 8px 0; border-bottom: 1px dashed rgba(212, 175, 55, 0.3); font-size: 0.95rem; }
+        .pricing-features li:before { content: '✓ '; color: var(--bright-green); font-weight: bold; margin-right: 8px; }
+
+        .pricing-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), #f0c419);
+            color: var(--primary-green);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .pricing-button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6); }
+
+        /* CREDENTIALS SECTION */
+        .credentials { background-color: var(--light-gold); padding: 3rem 0; text-align: center; }
+        .credentials h2 { color: var(--primary-green); font-size: 2.5rem; margin-bottom: 1.5rem; }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .badge {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            width: 280px;
+            min-height: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .badge:hover { transform: translateY(-5px); }
+        .badge-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+
+        .books-badge {
+            padding: 15px;
+            justify-content: flex-start;
+            align-items: stretch;
+            min-height: 380px;
+        }
+
+        .clickable-image {
+            width: 100%;
+            max-width: 240px;
+            height: 180px;
+            margin: 10px auto 15px;
+            border-radius: 10px;
+            border: 3px solid var(--gold);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: zoom-in;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .clickable-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            border-color: var(--bright-green);
+        }
+
+        .clickable-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            display: block;
+        }
+
+        .books-badge h3 {
+            color: var(--primary-green);
+            font-size: 1.15rem;
+            margin: 10px 0 8px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .books-badge > p:not(.click-hint) {
+            font-size: 0.9rem;
+            color: #555;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .click-hint { font-size: 0.8rem; color: var(--bright-green); font-weight: 600; margin-top: 8px; }
+
+        .trainer-links { margin-top: auto; display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 240px; }
+
+        .trainer-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #0077FF, #0055cc);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 119, 255, 0.3);
+        }
+
+        .trainer-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 119, 255, 0.5);
+            background: linear-gradient(135deg, #0055cc, #0044aa);
+        }
+
+        /* ====== MODAL (увеличение фото + пролистывание) ====== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.92);
+            padding: 30px 16px;
+        }
+
+        .modal-inner {
+            position: relative;
+            width: 100%;
+            max-width: min(980px, 92vw);
+            margin: 0 auto;
+        }
+
+        .modal-content {
+            display: block;
+            width: 100%;
+            max-height: 78vh;
+            object-fit: contain;
+            border-radius: 14px;
+            border: 3px solid rgba(212, 175, 55, 0.6);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            background: #111;
+        }
+
+        .modal-caption {
+            margin: 14px auto 0;
+            text-align: center;
+            color: rgba(255,255,255,0.92);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .close-modal {
+            position: fixed;
+            top: 16px;
+            right: 22px;
+            color: #fff;
+            font-size: 44px;
+            font-weight: 700;
+            cursor: pointer;
+            line-height: 1;
+            opacity: 0.9;
+            user-select: none;
+            z-index: 1001;
+            text-shadow: 0 4px 14px rgba(0,0,0,0.6);
+        }
+
+        .close-modal:hover { opacity: 1; }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 0;
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            width: 46px;
+            height: 56px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 34px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+            transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
+            opacity: 0.95;
+            user-select: none;
+        }
+
+        .modal-nav:hover {
+            background: rgba(255,255,255,0.18);
+            transform: translateY(-50%) scale(1.03);
+        }
+
+        .modal-nav.prev { left: 10px; }
+        .modal-nav.next { right: 10px; }
+
+        .modal-nav[disabled] {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        /* ====== /MODAL ====== */
+
+        /* REVIEWS SECTION */
+        .reviews {
+            background: linear-gradient(135deg, var(--white), var(--light-gold));
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .reviews h2 { color: var(--primary-green); font-size: 2.5rem; margin-bottom: 2.5rem; }
+
+        .reviews h2 span {
+            display: block;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            margin-top: 0.5rem;
+            color: var(--dark-emerald);
+        }
+
+        .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+
+        .review-card {
+            background: var(--white);
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            padding: 25px 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-family: 'Lobster', cursive;
+            font-size: 4rem;
+            color: rgba(212, 175, 55, 0.2);
+            line-height: 1;
+        }
+
+        .review-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.25);
+            border-color: var(--bright-green);
+        }
+
+        .review-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        .review-text { font-size: 0.95rem; color: var(--text-dark); line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+        .review-author { font-weight: 700; color: var(--primary-green); font-family: 'Lobster', cursive; font-size: 1.3rem; margin-bottom: 5px; }
+        .review-source { font-size: 0.85rem; color: var(--bright-green); }
+
+        .vk-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #0077FF, #0055cc);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 119, 255, 0.3);
+            margin-top: 10px;
+        }
+
+        .vk-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 119, 255, 0.5);
+            background: linear-gradient(135deg, #0055cc, #0044aa);
+        }
+
+        .vk-icon { font-size: 1.3rem; }
+
+        /* CONTACTS SECTION */
+        .contacts { padding: 4rem 0; text-align: center; background: #fff; }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--gold), #f0c419);
+            color: var(--primary-green);
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-family: 'Lobster', cursive;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6); }
+
+        .contact-info { margin-top: 30px; font-size: 1.2rem; }
+        .contact-item { margin: 10px 0; color: var(--primary-green); font-weight: bold; }
+
+        footer { background-color: var(--primary-green); color: var(--light-gold); text-align: center; padding: 1.5rem; font-size: 0.9rem; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .steps-container { grid-template-columns: repeat(2, 1fr); }
+            .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+
+            .header-content {
+                justify-content: center;
+                text-align: center;
+                flex-direction: column;
+            }
+
+            .emblem { width: 120px; height: 120px; }
+            .nav-list { gap: 15px; }
+            .nav-list a { font-size: 0.85rem; padding: 6px 12px; }
+            .header-media { min-height: 380px; }
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 2.5rem; }
+            .slogan { font-size: 1.4rem; padding: 8px 20px; }
+            .hero { flex-direction: column-reverse; text-align: center; }
+            .hero-text { padding-right: 0; margin-top: 2rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .how-i-work h2 { font-size: 1.8rem; }
+            .steps-container { grid-template-columns: 1fr; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .clickable-image { max-width: 200px; }
+
+            .modal { padding: 20px 12px; }
+            .modal-content { max-height: 72vh; }
+            .close-modal { right: 16px; font-size: 40px; }
+            .modal-nav { width: 42px; height: 52px; font-size: 30px; border-radius: 12px; }
+            .modal-nav.prev { left: 6px; }
+            .modal-nav.next { right: 6px; }
+
+            .pricing-card.featured { transform: none; }
+            .pricing-card.featured:hover { transform: translateY(-10px); }
+
+            .header-media { min-height: 340px; max-height: 72vh; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION MENU -->
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <ul class="nav-list">
+                <li><a href="#about">Обо мне</a></li>
+                <li><a href="#how-i-work">Как работаю</a></li>
+                <li><a href="#pricing">Цены</a></li>
+                <li><a href="#credentials">Почему обращаются</a></li>
+                <li><a href="#reviews">Отзывы</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="about">
+        <div class="header-media" aria-label="Видео-заголовок">
+
+            <!-- РАМКА ИМЕННО ДЛЯ ВИДЕО (под пропорции) -->
+            <div class="header-video-frame" id="headerVideoFrame">
+                <video id="headerVideo" autoplay muted loop playsinline preload="metadata">
+                    <source src="https://v1.pinimg.com/videos/iht/expMp4/df/97/81/df978111ed6278765b1de2e2369b847a_720w.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+
+                <div class="header-overlay"></div>
+
+                <div class="header-inner">
+                    <div class="container">
+                        <div class="header-content">
+                            <div>
+                                <div class="logo">Иванова Светлана Юрьевна</div>
+                                <div class="subtitle">Профессиональный репетитор по русскому языку</div>
+                                <div class="slogan">Сдай ВПР/ОГЭ/ЕГЭ на все 100!</div>
+
+                                <!-- КНОПКА -->
+                                <div>
+                                    <a class="start-btn" href="#start">НАЧАЛИ! ↓</a>
+                                </div>
+                            </div>
+
+                            <div class="emblem">
+                                <img src="https://i.pinimg.com/1200x/31/9e/00/319e00773f375e77ae914886d9d85ef4.jpg" alt="Эмблема">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /header-video-frame -->
+
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container" style="display: flex; flex-wrap: wrap; align-items: center;">
+            <div class="hero-text">
+                <h2>Ваш проводник к грамотности и высоким баллам</h2>
+                <p>
+                    Добро пожаловать! Помогаю ученикам запоминать правила без зубрёжки - разбираться без скуки.
+                    Методика проверена десятилетиями и позволяет ученикам чувствовать себя уверенно на любом экзамене.
+                </p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">40 лет</span>
+                        Стаж работы в школе
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">27 лет</span>
+                        Репетиторский стаж
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <div class="photo-placeholder">
+                    <img src="https://i.pinimg.com/1200x/ff/ed/09/ffed09c5391715ff1ff43b7c1d30f919.jpg" alt="Иванова Светлана Юрьевна">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO AFTER HEADER -->
+    <section class="video-section" id="start" aria-label="Видео">
+        <div class="container">
+            <div class="video-wrap">
+                <div class="video-ratio">
+                    <video controls playsinline preload="metadata">
+                        <source src="https://v1.pinimg.com/videos/iht/expMp4/1b/af/8f/1baf8fbdde4c66f05cbd214a7cf7db61_720w.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+            </div>
+            <div class="video-caption">🎬</div>
+        </div>
+    </section>
+
+    <!-- HOW I WORK SECTION -->
+    <section class="how-i-work" id="how-i-work">
+        <div class="container">
+            <h2>
+                Как я работаю
+                <span>Четыре шага к вашему высокому баллу</span>
+            </h2>
+
+            <div class="steps-container">
+                <div class="step-card">
+                    <span class="step-number">01</span>
+                    <span class="step-icon">📊</span>
+                    <h3>Диагностика</h3>
+                    <p>Проверяю текущий уровень, нахожу пробелы и составляю индивидуальный план подготовки.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-number">02</span>
+                    <span class="step-icon">📚</span>
+                    <h3>Системный подход</h3>
+                    <p>Работаем по структуре: теория → практика → мониторинг, работа с бланками.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-number">03</span>
+                    <span class="step-icon">✍️</span>
+                    <h3>Формат экзамена</h3>
+                    <p>Разбираем задания ФИПИ, ФИОКО, пишем сочинения в формате ОГЭ/ЕГЭ, проводим мониторинг тестовых заданий, тестовые марафоны. Никаких неожиданностей на ВПР, ОГЭ, ЕГЭ!</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-number">04</span>
+                    <span class="step-icon">🏆</span>
+                    <h3>Результат</h3>
+                    <p>Регулярные тесты, отслеживание прогресса. Довожу до высокого балла каждого!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>
+                Цены как цены!
+                <span>Выберите удобный формат занятий</span>
+            </h2>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <span class="pricing-icon">👤</span>
+                    <h3>Индивидуальные занятия</h3>
+                    <div class="pricing-price">
+                        1500 ₽
+                        <span>за 60 минут</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Персональная программа</li>
+                        <li>Гибкий график</li>
+                        <li>Домашние задания</li>
+                        <li>Проверка работ</li>
+                        <li>Поддержка в мессенджере</li>
+                    </ul>
+                    <a href="#contacts" class="pricing-button">Записаться</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <span class="pricing-icon">👥</span>
+                    <h3>Мини-группа (2-5 чел.)</h3>
+                    <div class="pricing-price">
+                        1000 ₽
+                        <span>за 90 минут</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Работа в малой группе</li>
+                        <li>Обсуждение и дискуссии</li>
+                        <li>Групповые задания</li>
+                        <li>Домашние задания</li>
+                        <li>Экономия бюджета</li>
+                    </ul>
+                    <a href="#contacts" class="pricing-button">Записаться</a>
+                </div>
+
+                <div class="pricing-card">
+                    <span class="pricing-icon">📦</span>
+                    <h3>Абонемент (8 занятий)</h3>
+                    <div class="pricing-price">
+                        8 400 ₽
+                        <span>вместо 10 000 ₽</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Экономия 1600 ₽</li>
+                        <li>Фиксированная цена</li>
+                        <li>Приоритетная запись</li>
+                        <li>Бонусные материалы</li>
+                        <li>Пробное занятие бесплатно</li>
+                    </ul>
+                    <a href="#contacts" class="pricing-button">Записаться</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CREDENTIALS SECTION -->
+    <section class="credentials" id="credentials">
+        <div class="container">
+            <h2>Почему обращаются ко мне?</h2>
+
+            <div class="badges">
+                <div class="badge">
+                    <span class="badge-icon">🎓</span>
+                    <h3>Заслуженный учитель РФ</h3>
+                    <p>Высшая государственная награда за педагогические заслуги.</p>
+                </div>
+
+                <div class="badge">
+                    <span class="badge-icon">📚</span>
+                    <h3>Кандидат наук</h3>
+                    <p>Кандидат педагогических наук. Глубокое понимание методики обучения.</p>
+                </div>
+
+                <div class="badge">
+                    <span class="badge-icon">✍️</span>
+                    <h3>Автор пособий</h3>
+                    <p>Автор многочисленных книг по подготовке к ЕГЭ и ОГЭ.</p>
+                </div>
+
+                <!-- КЛИКАБЕЛЬНЫЕ ФОТО (теперь пролистываются в модалке) -->
+                <div class="badge books-badge">
+                    <div class="clickable-image" data-caption="Учебные пособия">
+                        <img src="https://i.pinimg.com/1200x/68/59/e4/6859e4911c714d262c7b92a1e8f3d0da.jpg" alt="Учебные пособия">
+                    </div>
+                    <h3>Мои учебные пособия</h3>
+                    <p>Эффективные методики подготовки</p>
+                    <p class="click-hint">🔍 Нажмите для увеличения</p>
+                </div>
+
+                <div class="badge books-badge">
+                    <div class="clickable-image" data-caption="Интерактивные тренажёры 1">
+                        <img src="https://i.pinimg.com/1200x/15/25/09/15250900bee381de3ae9b92c557bbfaa.jpg" alt="Интерактивные тренажёры 1">
+                    </div>
+                    <h3>Интерактивные авторские тренажёры</h3>
+                    <p>Современные методы обучения</p>
+                    <p class="click-hint">🔍 Нажмите для увеличения</p>
+                    <div class="trainer-links">
+                        <a href="https://vk.com/wall-229704574_40" target="_blank" class="trainer-link">
+                            <span>🔗</span> Тренажёр 1
+                        </a>
+                        <a href="https://vk.com/wall-229704574_39" target="_blank" class="trainer-link">
+                            <span>🔗</span> Тренажёр 2
+                        </a>
+                    </div>
+                </div>
+
+                <div class="badge books-badge">
+                    <div class="clickable-image" data-caption="Интерактивные тренажёры 2">
+                        <img src="https://i.pinimg.com/1200x/07/11/1b/07111b150e9b973fd710dcb46cb3f8e2.jpg" alt="Интерактивные тренажёры 2">
+                    </div>
+                    <h3>Интерактивные авторские игры</h3>
+                    <p>Практика в игровой форме</p>
+                    <p class="click-hint">🔍 Нажмите для увеличения</p>
+                    <div class="trainer-links">
+                        <a href="https://vk.com/wall-229704574_41" target="_blank" class="trainer-link">
+                            <span>🔗</span> Перейти к тренажёру
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIDEO (теперь под плашками) -->
+        <div class="video-wrap" style="max-width: 900px; margin: 26px auto 0; border-radius: 18px; overflow: hidden; border: 3px solid var(--gold); box-shadow: 0 10px 28px rgba(0,0,0,0.12); background: #000;">
+            <div class="video-ratio" style="position: relative; width: 100%; padding-top: 56.25%;">
+                <video controls playsinline preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; display:block; object-fit:cover;">
+                    <source src="https://v1.pinimg.com/videos/iht/expMp4/84/10/33/841033f91a31b0eca2dc871d5d034362_720w.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- MODAL WINDOW -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+
+        <div class="modal-inner" onclick="event.stopPropagation()">
+            <button class="modal-nav prev" id="modalPrev" type="button" aria-label="Предыдущее фото">‹</button>
+            <button class="modal-nav next" id="modalNext" type="button" aria-label="Следующее фото">›</button>
+
+            <img class="modal-content" id="modalImg" src="" alt="">
+            <div class="modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <!-- REVIEWS SECTION -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2>
+                Отзывы
+                <span>Реальные истории</span>
+            </h2>
+
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <span class="review-icon">💬</span>
+                    <p class="review-text">
+                        Читать отзыв в социальной сети ВКонтакте. Нажмите на кнопку ниже, чтобы перейти к публикации.
+                    </p>
+                    <a href="https://vk.com/wall-226347289_35" target="_blank" class="vk-button">
+                        <span class="vk-icon">🔗</span>
+                        Открыть отзыв ВКонтакте
+                    </a>
+                </div>
+
+                <div class="review-card">
+                    <span class="review-icon">✍️</span>
+                    <p class="review-text">
+                        УРА! 100 баллов! Светлана Юрьевна! Спасибо вам за ваш высокий пример учительства и человечности, воли и снисходительности!
+                    </p>
+                    <p class="review-author">Алексей А.</p>
+                    <p class="review-source">⭐⭐⭐⭐⭐</p>
+                </div>
+
+                <div class="review-card">
+                    <span class="review-icon">🎯</span>
+                    <p class="review-text">
+                        Занятия Светланы Юрьевны интересные и по делу. Никакой воды — только практика и разбор типичных ошибок. Сочинение перестало пугать мою дочь. За три месяца заметно выросли баллы. Мама Тамары З.
+                    </p>
+                    <p class="review-author">Тамара С.</p>
+                    <p class="review-source">⭐⭐⭐⭐⭐</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTS SECTION -->
+    <section class="contacts" id="contacts">
+        <div class="container">
+            <h2 style="color: var(--primary-green); font-size: 2.5rem; margin-bottom: 1rem;">Готовы к результату?</h2>
+            <p style="font-size: 1.2rem;">Запишитесь на первое занятие и начните путь к отличной оценке!</p>
+
+            <a href="tel:+79990000000" class="cta-button">Свяжитесь со мной</a>
+
+            <div class="contact-info">
+                <div class="contact-item">📞 +7 (999) 000-00-00</div>
+                <div class="contact-item">📧 ivanovvva.svetlana@gmail.com</div>
+                <div class="contact-item">
+                    <a href="https://vk.com/club229704574" target="_blank" style="color: var(--bright-green); text-decoration: none;">
+                        🔗 ВКонтакте
+                    </a>
+                </div>
+                <div class="contact-item">📍 г. Самара, ул. Стара Загора, 100. Репетитор-центр "Всё про100!" (или Онлайн по ВК Звонки)</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Иванова Светлана Юрьевна. Все права защищены.</p>
+            <p>Подготовка к ЕГЭ и ОГЭ с гарантией качества.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ====== Подгоняем РАМКУ шапочного видео под реальные пропорции видео ======
+        (function () {
+            const video = document.getElementById('headerVideo');
+            const frame = document.getElementById('headerVideoFrame');
+            if (!video || !frame) return;
+
+            function fitFrameToVideo() {
+                // если метаданные ещё не готовы
+                if (!video.videoWidth || !video.videoHeight) return;
+
+                const ar = video.videoWidth / video.videoHeight;
+
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+
+                // ограничения как у шапки
+                const maxW = Math.min(1400, vw * 0.92);
+                const maxH = Math.min(vh * 0.78, 780); // 780px — чтобы не раздувалось сверх меры
+
+                // выбираем размер так, чтобы и по ширине влезло, и по высоте
+                let w = maxW;
+                let h = w / ar;
+
+                if (h > maxH) {
+                    h = maxH;
+                    w = h * ar;
+                }
+
+                frame.style.width = w + 'px';
+                frame.style.height = h + 'px';
+            }
+
+            video.addEventListener('loadedmetadata', fitFrameToVideo);
+            window.addEventListener('resize', fitFrameToVideo);
+        })();
+
+        // ====== Gallery / Modal with Prev/Next ======
+        let gallery = [];
+        let currentIndex = 0;
+
+        function openModal(imageSrc, caption) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalCaption = document.getElementById('modalCaption');
+
+            modalImg.src = imageSrc;
+            modalImg.alt = caption || '';
+            modalCaption.textContent = caption || '';
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+
+            updateNavButtons();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function showByIndex(idx) {
+            if (!gallery.length) return;
+
+            if (idx < 0) idx = 0;
+            if (idx > gallery.length - 1) idx = gallery.length - 1;
+
+            currentIndex = idx;
+            const item = gallery[currentIndex];
+            openModal(item.src, item.caption);
+        }
+
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('modalPrev');
+            const nextBtn = document.getElementById('modalNext');
+            if (!prevBtn || !nextBtn) return;
+
+            const hasGallery = gallery.length > 1;
+            prevBtn.style.display = hasGallery ? 'inline-flex' : 'none';
+            nextBtn.style.display = hasGallery ? 'inline-flex' : 'none';
+
+            prevBtn.disabled = (currentIndex <= 0);
+            nextBtn.disabled = (currentIndex >= gallery.length - 1);
+        }
+
+        function prevImage() { showByIndex(currentIndex - 1); }
+        function nextImage() { showByIndex(currentIndex + 1); }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const clickable = Array.from(document.querySelectorAll('#credentials .clickable-image'));
+            gallery = clickable.map((wrap) => {
+                const img = wrap.querySelector('img');
+                const src = img ? img.src : '';
+                const caption = wrap.getAttribute('data-caption') || (img ? img.alt : '') || '';
+                return { src, caption };
+            }).filter(x => x.src);
+
+            clickable.forEach((wrap, index) => {
+                wrap.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    currentIndex = index;
+                    const item = gallery[currentIndex];
+                    openModal(item.src, item.caption);
+                });
+            });
+
+            const prevBtn = document.getElementById('modalPrev');
+            const nextBtn = document.getElementById('modalNext');
+
+            if (prevBtn) prevBtn.addEventListener('click', function (e) { e.stopPropagation(); prevImage(); });
+            if (nextBtn) nextBtn.addEventListener('click', function (e) { e.stopPropagation(); nextImage(); });
+
+            const modalImg = document.getElementById('modalImg');
+            if (modalImg) {
+                modalImg.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            }
+
+            const closeBtn = document.querySelector('.close-modal');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') closeModal();
+
+            const modal = document.getElementById('imageModal');
+            const isOpen = modal && modal.style.display === 'block';
+            if (!isOpen) return;
+
+            if (event.key === 'ArrowLeft') prevImage();
+            if (event.key === 'ArrowRight') nextImage();
+        });
+    </script>
+       <!-- 🌟 Золотой звёздный шлейф за курсором -->
+<canvas id="star-trail" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+
+<script>
+(function() {
+    'use strict';
+    
+    const canvas = document.getElementById('star-trail');
+    const ctx = canvas.getContext('2d');
+    
+    // 🎨 Настройки звёздного шлейфа
+    const config = {
+        starCount: 12,          // Звёзд за движение (8-15 оптимально)
+        starLife: 50,           // Время жизни звезды (кадры)
+        minSize: 4,             // Минимальный размер звезды
+        maxSize: 14,            // Максимальный размер звезды
+        speed: 0.3,             // Плавность следования
+        colors: [               // 🏆 Золотая палитра
+            '#ffd700',          // Благородное золото
+            '#f1c40f',          // Яркое золото
+            '#f39c12',          // Тёплое оранжевое золото
+            '#ffeaa7',          // Светлое золото
+            '#ffeb3b'           // Лимонное золото
+        ],
+        glow: true,
+        glowIntensity: 20,
+        rotation: true,         // Вращение звёзд
+        rotationSpeed: 0.05     // Скорость вращения
+    };
+    
+    let stars = [];
+    let mouseX = 0, mouseY = 0;
+    let lastX = 0, lastY = 0;
+    
+    // Адаптация canvas под экран
+    function resizeCanvas() {
+        canvas.width = window.innerWidth * window.devicePixelRatio;
+        canvas.height = window.innerHeight * window.devicePixelRatio;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    
+    // 🌟 Рисуем звезду (5 лучей)
+    function drawStarShape(cx, cy, spikes, outerRadius, innerRadius, color, alpha) {
+        let rot = Math.PI / 2 * 3;
+        let x = cx;
+        let y = cy;
+        let step = Math.PI / spikes;
+        
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - outerRadius);
+        
+        for (let i = 0; i < spikes; i++) {
+            x = cx + Math.cos(rot) * outerRadius;
+            y = cy + Math.sin(rot) * outerRadius;
+            ctx.lineTo(x, y);
+            rot += step;
+            
+            x = cx + Math.cos(rot) * innerRadius;
+            y = cy + Math.sin(rot) * innerRadius;
+            ctx.lineTo(x, y);
+            rot += step;
+        }
+        
+        ctx.lineTo(cx, cy - outerRadius);
+        ctx.closePath();
+        
+        // Градиент для объёма
+        const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, outerRadius);
+        gradient.addColorStop(0, color.replace(')', ', ' + alpha + ')').replace('rgb', 'rgba'));
+        gradient.addColorStop(0.5, color.replace(')', ', ' + (alpha * 0.7) + ')').replace('rgb', 'rgba'));
+        gradient.addColorStop(1, 'transparent');
+        
+        ctx.fillStyle = gradient;
+        
+        if (config.glow) {
+            ctx.shadowColor = color;
+            ctx.shadowBlur = config.glowIntensity * alpha;
+        }
+        
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    }
+    
+    // Класс звезды
+    class Star {
+        constructor(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.targetX = x;
+            this.targetY = y;
+            this.size = Math.random() * (config.maxSize - config.minSize) + config.minSize;
+            this.originalSize = this.size;
+            this.color = color;
+            this.life = config.starLife;
+            this.maxLife = config.starLife;
+            this.vx = (Math.random() - 0.5) * 2;
+            this.vy = (Math.random() - 0.5) * 2 - 0.5; // Лёгкий подъём вверх
+            this.rotation = Math.random() * Math.PI * 2;
+            this.rotationSpeed = (Math.random() - 0.5) * config.rotationSpeed;
+        }
+        
+        update() {
+            this.targetX += (mouseX - this.targetX) * config.speed;
+            this.targetY += (mouseY - this.targetY) * config.speed;
+            this.x += (this.targetX - this.x) * 0.1 + this.vx;
+            this.y += (this.targetY - this.y) * 0.1 + this.vy;
+            this.life--;
+            this.size = this.originalSize * (this.life / this.maxLife);
+            this.vx *= 0.95;
+            this.vy *= 0.95;
+            
+            if (config.rotation) {
+                this.rotation += this.rotationSpeed;
+            }
+            
+            return this.life > 0 && this.size > 0.5;
+        }
+        
+        draw() {
+            const alpha = this.life / this.maxLife;
+            
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rotation);
+            
+            // Рисуем 5-конечную звезду
+            drawStarShape(0, 0, 5, this.size, this.size / 2.5, this.color, alpha);
+            
+            ctx.restore();
+        }
+    }
+    
+    // Обработчик движения мыши
+    function handleMouseMove(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        const distance = Math.hypot(mouseX - lastX, mouseY - lastY);
+        if (distance > 5) { // Чуть больше порог — звёзды реже, но выразительнее
+            for (let i = 0; i < config.starCount; i++) {
+                const color = config.colors[Math.floor(Math.random() * config.colors.length)];
+                const offsetX = (Math.random() - 0.5) * 15;
+                const offsetY = (Math.random() - 0.5) * 15;
+                stars.push(new Star(
+                    mouseX + offsetX, 
+                    mouseY + offsetY, 
+                    color
+                ));
+            }
+            lastX = mouseX;
+            lastY = mouseY;
+        }
+    }
+    
+    // Анимационный цикл
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        stars = stars.filter(star => {
+            const alive = star.update();
+            if (alive) star.draw();
+            return alive;
+        });
+        
+        requestAnimationFrame(animate);
+    }
+    
+    // Обработчик касаний для мобильных
+    function handleTouchMove(e) {
+        if (e.touches.length > 0) {
+            const touch = e.touches[0];
+            handleMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
+        }
+    }
+    
+    // Инициализация
+    function init() {
+        resizeCanvas();
+        animate();
+        
+        window.addEventListener('resize', resizeCanvas);
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stars = [];
+        });
+    }
+    
+    // Запуск после загрузки
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+</script>
+<!-- ✨ Конец эффекта звёздного шлейфа -->
+     
+</body>
+</html>
